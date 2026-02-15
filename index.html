@@ -204,6 +204,48 @@
       letter-spacing:.4px;
     }
 
+    /* NEW: Billing toggle + annual pricing pill */
+    .billing{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      margin: 0 0 14px;
+    }
+    .toggle{
+      display:inline-flex; align-items:center; gap:10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding:8px 10px;
+      border-radius:999px;
+      box-shadow: var(--shadow);
+    }
+    .toggle label{font-weight:900; font-size:13px; color:var(--muted); cursor:pointer;}
+    .toggle input{accent-color: var(--brand);}
+    .save-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:900; font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(118,228,182,.35);
+      background: rgba(118,228,182,.10);
+      color:#bff5df;
+      white-space:nowrap;
+    }
+    .note{
+      color:var(--muted);
+      font-size:13px;
+      margin:0 0 6px;
+    }
+    .annual-line{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:6px;
+    }
+    .annual-line strong{color:var(--text);}
+    .strike{
+      text-decoration: line-through;
+      opacity:.55;
+    }
+
     .table{
       width:100%;
       border-collapse:separate;
@@ -252,21 +294,29 @@
     footer{padding:26px 0 40px; color:var(--muted); font-size:13px;}
     .smallprint{color:rgba(255,255,255,.45);}
     .anchor{scroll-margin-top: 90px;}
+    .muted{color:var(--muted);}
   </style>
 </head>
 
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Your Google Form -->
   <script>
     // ✅ Your Google Form link (single source of truth)
     const FORM_URL = "https://forms.gle/iYsTvtiJwiJdH6em8";
 
-    // Map CTAs to "intent" so you can later prefill / track if you want
-    function formLink(intent) {
-      // Using hash keeps it simple and doesn't break Google Forms
-      return `${FORM_URL}#intent=${encodeURIComponent(intent)}`;
+    // Annual discount = 2 free months = pay for 10 months
+    // Annual prices computed from monthly pricing:
+    const PRICING = {
+      Email:  { monthly: 29, annual: 29 * 10 },
+      Phone:  { monthly: 97, annual: 97 * 10 },
+      InPerson:{ monthly: 199, annual: 199 * 10 } // treated as "membership" option; see note below
+    };
+
+    function formLink(intent, billing) {
+      // Hash keeps Google Forms happy; also helps you see which CTA was used
+      const b = billing ? `&billing=${encodeURIComponent(billing)}` : "";
+      return `${FORM_URL}#intent=${encodeURIComponent(intent)}${b}`;
     }
   </script>
 
@@ -364,6 +414,16 @@
           Start free. Upgrade only if you want direct help and faster clarity.
         </p>
 
+        <!-- NEW: Billing toggle (Monthly / Annual) -->
+        <div class="billing" aria-label="Billing frequency toggle">
+          <div class="toggle">
+            <label><input type="radio" name="billing" value="Monthly" checked> Monthly</label>
+            <label><input type="radio" name="billing" value="Annual"> Annual</label>
+          </div>
+          <div class="save-pill">Save 2 months with Annual (pay for 10)</div>
+        </div>
+        <p class="note">Annual plan = <strong>2 months free</strong> compared to monthly billing.</p>
+
         <div class="pricing" role="list">
           <div class="card" role="listitem">
             <span class="badge free">🟢 FREE STARTER ACCESS</span>
@@ -387,7 +447,7 @@
           <div class="card featured" role="listitem">
             <span class="badge email">🟡 DIRECT EMAIL SUPPORT</span>
             <h3>Email Support Tier</h3>
-            <p class="price">$29 <small>/ month</small></p>
+            <p class="price" id="price-email">$29 <small>/ month</small></p>
             <p>Direct access for reassurance, troubleshooting, and seasonal guidance.</p>
             <ul>
               <li>Unlimited simple Q&amp;A</li>
@@ -395,6 +455,7 @@
               <li>Hive log review feedback</li>
               <li>Treatment &amp; equipment planning</li>
             </ul>
+            <div class="annual-line" id="annual-email"></div>
             <div class="spacer"></div>
             <div class="card-actions">
               <a class="btn primary" id="cta-email" href="#" target="_blank" rel="noopener">Get Direct Access</a>
@@ -406,7 +467,7 @@
           <div class="card" role="listitem">
             <span class="badge phone">🟠 STRATEGIC HIVE REVIEW</span>
             <h3>Phone / Video Tier</h3>
-            <p class="price">$97 <small>/ month</small></p>
+            <p class="price" id="price-phone">$97 <small>/ month</small></p>
             <p>Scheduled calls for deeper troubleshooting and a seasonal plan you can follow.</p>
             <ul>
               <li>Everything in Email Tier</li>
@@ -414,6 +475,7 @@
               <li>Swarm-prep review + next steps</li>
               <li>Post-call recap notes</li>
             </ul>
+            <div class="annual-line" id="annual-phone"></div>
             <div class="spacer"></div>
             <div class="card-actions">
               <a class="btn primary" id="cta-phone" href="#" target="_blank" rel="noopener">Schedule Strategy Support</a>
@@ -425,7 +487,7 @@
           <div class="card" role="listitem">
             <span class="badge local">🔴 LOCAL IN-PERSON</span>
             <h3>Bay County Hive Visit</h3>
-            <p class="price">$199 <small>/ visit</small></p>
+            <p class="price" id="price-inperson">$199 <small>/ month</small></p>
             <p>Hands-on guidance at your hive—education-first, not a management service.</p>
             <ul>
               <li>Frame-by-frame walkthrough</li>
@@ -433,6 +495,7 @@
               <li>Seasonal plan for your yard</li>
               <li>Confidence-building practice</li>
             </ul>
+            <div class="annual-line" id="annual-inperson"></div>
             <div class="spacer"></div>
             <div class="card-actions">
               <a class="btn primary" id="cta-inperson" href="#" target="_blank" rel="noopener">Book a Hive Visit</a>
@@ -569,30 +632,100 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Wire CTAs to your Google Form with intent markers
-    const ctas = {
-      "cta-top-start": "Free",
-      "cta-hero-start": "Free",
-      "cta-free": "Free",
-      "cta-compare-start": "Free",
-      "cta-bottom-start": "Free",
+    // Billing selection
+    function getBilling() {
+      const sel = document.querySelector('input[name="billing"]:checked');
+      return sel ? sel.value : "Monthly";
+    }
 
-      "cta-top-email": "Email",
-      "cta-email": "Email",
-      "cta-compare-email": "Email",
-      "cta-bottom-email": "Email",
+    // Update price text + annual discount lines
+    function renderPrices() {
+      const billing = getBilling();
 
-      "cta-phone": "Phone",
-      "cta-inperson": "InPerson"
-    };
+      // Email
+      const emailPrice = document.getElementById("price-email");
+      const emailAnnual = document.getElementById("annual-email");
+      // Phone
+      const phonePrice = document.getElementById("price-phone");
+      const phoneAnnual = document.getElementById("annual-phone");
+      // InPerson (treated as a monthly plan option for discount display)
+      const inpersonPrice = document.getElementById("price-inperson");
+      const inpersonAnnual = document.getElementById("annual-inperson");
 
-    Object.entries(ctas).forEach(([id, intent]) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.href = formLink(intent);
-      el.addEventListener("click", () => {
-        // Optional: swap with GA/Meta Pixel later.
-        console.log("[CTA Click]", id, "intent:", intent, "->", el.href);
+      // Helper: annual line content (shows savings)
+      function annualLine(monthly, annual) {
+        const full = monthly * 12;
+        const saved = full - annual;
+        return `Annual: <strong>$${annual}</strong> / year <span class="muted">(was <span class="strike">$${full}</span>, save $${saved})</span>`;
+      }
+
+      // When Monthly selected: show monthly, and show annual savings line under it.
+      // When Annual selected: show annual, and show "Equivalent monthly" under it.
+      if (billing === "Monthly") {
+        emailPrice.innerHTML = `$${PRICING.Email.monthly} <small>/ month</small>`;
+        emailAnnual.innerHTML = annualLine(PRICING.Email.monthly, PRICING.Email.annual);
+
+        phonePrice.innerHTML = `$${PRICING.Phone.monthly} <small>/ month</small>`;
+        phoneAnnual.innerHTML = annualLine(PRICING.Phone.monthly, PRICING.Phone.annual);
+
+        inpersonPrice.innerHTML = `$${PRICING.InPerson.monthly} <small>/ month</small>`;
+        inpersonAnnual.innerHTML = annualLine(PRICING.InPerson.monthly, PRICING.InPerson.annual);
+      } else {
+        // Annual selected
+        const eqEmail = (PRICING.Email.annual / 12).toFixed(2);
+        emailPrice.innerHTML = `$${PRICING.Email.annual} <small>/ year</small>`;
+        emailAnnual.innerHTML = `Equivalent: <strong>$${eqEmail}</strong> / month (2 months free)`;
+
+        const eqPhone = (PRICING.Phone.annual / 12).toFixed(2);
+        phonePrice.innerHTML = `$${PRICING.Phone.annual} <small>/ year</small>`;
+        phoneAnnual.innerHTML = `Equivalent: <strong>$${eqPhone}</strong> / month (2 months free)`;
+
+        const eqIn = (PRICING.InPerson.annual / 12).toFixed(2);
+        inpersonPrice.innerHTML = `$${PRICING.InPerson.annual} <small>/ year</small>`;
+        inpersonAnnual.innerHTML = `Equivalent: <strong>$${eqIn}</strong> / month (2 months free)`;
+      }
+    }
+
+    // Wire CTAs to your Google Form with intent + billing markers
+    function wireCTAs() {
+      const billing = getBilling();
+      const ctas = {
+        "cta-top-start": { intent: "Free" },
+        "cta-hero-start": { intent: "Free" },
+        "cta-free": { intent: "Free" },
+        "cta-compare-start": { intent: "Free" },
+        "cta-bottom-start": { intent: "Free" },
+
+        "cta-top-email": { intent: "Email" },
+        "cta-email": { intent: "Email" },
+        "cta-compare-email": { intent: "Email" },
+        "cta-bottom-email": { intent: "Email" },
+
+        "cta-phone": { intent: "Phone" },
+        "cta-inperson": { intent: "InPerson" }
+      };
+
+      Object.entries(ctas).forEach(([id, cfg]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        // Free tier ignores billing (still included for tracking)
+        const bill = cfg.intent === "Free" ? "Free" : billing;
+        el.href = formLink(cfg.intent, bill);
+        el.addEventListener("click", () => {
+          console.log("[CTA Click]", id, "intent:", cfg.intent, "billing:", bill, "->", el.href);
+        }, { once: true });
+      });
+    }
+
+    // Initialize
+    renderPrices();
+    wireCTAs();
+
+    // Re-render on toggle change
+    document.querySelectorAll('input[name="billing"]').forEach(r => {
+      r.addEventListener("change", () => {
+        renderPrices();
+        wireCTAs();
       });
     });
   </script>
