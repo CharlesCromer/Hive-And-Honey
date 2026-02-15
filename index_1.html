@@ -180,36 +180,8 @@
     .badge.local{border-color: rgba(255,107,107,.35); background: rgba(255,107,107,.10); color: #ffd0d0;}
 
     .card h3{margin:12px 0 6px; font-size:18px;}
-
-    /* NEW: more prominent price area */
-    .price-wrap{margin:0 0 10px;}
-    .price-row{
-      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
-      flex-wrap:wrap;
-    }
-    .price{
-      font-size:30px; margin:0; letter-spacing:-.3px;
-    }
-    .price small{font-size:14px; color:var(--muted); font-weight:800;}
-    .mini-savings{
-      display:inline-flex; align-items:center; gap:8px;
-      font-weight:900; font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(118,228,182,.35);
-      background: rgba(118,228,182,.10);
-      color:#bff5df;
-      white-space:nowrap;
-    }
-    .price-subline{
-      margin-top:8px;
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .price-subline strong{color:var(--text);}
-    .strike{ text-decoration: line-through; opacity:.55; }
-
+    .price{font-size:30px; margin:0 0 6px; letter-spacing:-.3px;}
+    .price small{font-size:14px; color:var(--muted); font-weight:700;}
     .card p{color:var(--muted); margin:0 0 14px;}
     .card ul{margin:0 0 16px; padding-left:18px; color:var(--muted);}
     .card li{margin:7px 0;}
@@ -232,7 +204,7 @@
       letter-spacing:.4px;
     }
 
-    /* Billing toggle + callout */
+    /* NEW: Billing toggle + annual pricing pill */
     .billing{
       display:flex; align-items:center; justify-content:space-between;
       gap:14px; flex-wrap:wrap;
@@ -253,15 +225,25 @@
       font-weight:900; font-size:12px;
       padding:7px 10px;
       border-radius:999px;
-      border:1px solid rgba(247,201,72,.45);
-      background: rgba(247,201,72,.12);
-      color:#ffe6a3;
+      border:1px solid rgba(118,228,182,.35);
+      background: rgba(118,228,182,.10);
+      color:#bff5df;
       white-space:nowrap;
     }
     .note{
       color:var(--muted);
       font-size:13px;
       margin:0 0 6px;
+    }
+    .annual-line{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:6px;
+    }
+    .annual-line strong{color:var(--text);}
+    .strike{
+      text-decoration: line-through;
+      opacity:.55;
     }
 
     .table{
@@ -323,14 +305,16 @@
     // ✅ Your Google Form link (single source of truth)
     const FORM_URL = "https://forms.gle/iYsTvtiJwiJdH6em8";
 
-    // Annual discount = 2 free months => pay for 10 months
+    // Annual discount = 2 free months = pay for 10 months
+    // Annual prices computed from monthly pricing:
     const PRICING = {
-      Email:   { monthly: 29, annual: 29 * 10 },
-      Phone:   { monthly: 97, annual: 97 * 10 },
-      InPerson:{ monthly: 199, annual: 199 * 10 } // displayed as a plan option
+      Email:  { monthly: 29, annual: 29 * 10 },
+      Phone:  { monthly: 97, annual: 97 * 10 },
+      InPerson:{ monthly: 199, annual: 199 * 10 } // treated as "membership" option; see note below
     };
 
     function formLink(intent, billing) {
+      // Hash keeps Google Forms happy; also helps you see which CTA was used
       const b = billing ? `&billing=${encodeURIComponent(billing)}` : "";
       return `${FORM_URL}#intent=${encodeURIComponent(intent)}${b}`;
     }
@@ -430,30 +414,21 @@
           Start free. Upgrade only if you want direct help and faster clarity.
         </p>
 
+        <!-- NEW: Billing toggle (Monthly / Annual) -->
         <div class="billing" aria-label="Billing frequency toggle">
           <div class="toggle">
             <label><input type="radio" name="billing" value="Monthly" checked> Monthly</label>
             <label><input type="radio" name="billing" value="Annual"> Annual</label>
           </div>
-          <div class="save-pill">🔥 Annual saves 2 months (pay for 10)</div>
+          <div class="save-pill">Save 2 months with Annual (pay for 10)</div>
         </div>
-        <p class="note">Tip: Most members choose Annual to lock in <strong>2 months free</strong>.</p>
+        <p class="note">Annual plan = <strong>2 months free</strong> compared to monthly billing.</p>
 
         <div class="pricing" role="list">
-          <!-- Free -->
           <div class="card" role="listitem">
             <span class="badge free">🟢 FREE STARTER ACCESS</span>
             <h3>Foundational Access</h3>
-
-            <div class="price-wrap">
-              <div class="price-row">
-                <p class="price">$0 <small>one-time</small></p>
-              </div>
-              <div class="price-subline">
-                <span><strong>No recurring charges.</strong></span>
-              </div>
-            </div>
-
+            <p class="price">$0 <small>one-time</small></p>
             <p>Low-friction entry point that gives you real tools and live Q&amp;A.</p>
             <ul>
               <li>📚 Free PDF guide</li>
@@ -469,19 +444,10 @@
             <div class="hint">Best for: new beekeepers who want a solid system without commitment.</div>
           </div>
 
-          <!-- Email -->
           <div class="card featured" role="listitem">
             <span class="badge email">🟡 DIRECT EMAIL SUPPORT</span>
             <h3>Email Support Tier</h3>
-
-            <div class="price-wrap">
-              <div class="price-row">
-                <p class="price" id="price-email">$29 <small>/ month</small></p>
-                <span class="mini-savings" id="save-email">Save 2 months yearly</span>
-              </div>
-              <div class="price-subline" id="sub-email"></div>
-            </div>
-
+            <p class="price" id="price-email">$29 <small>/ month</small></p>
             <p>Direct access for reassurance, troubleshooting, and seasonal guidance.</p>
             <ul>
               <li>Unlimited simple Q&amp;A</li>
@@ -489,6 +455,7 @@
               <li>Hive log review feedback</li>
               <li>Treatment &amp; equipment planning</li>
             </ul>
+            <div class="annual-line" id="annual-email"></div>
             <div class="spacer"></div>
             <div class="card-actions">
               <a class="btn primary" id="cta-email" href="#" target="_blank" rel="noopener">Get Direct Access</a>
@@ -497,19 +464,10 @@
             <div class="hint">Typical response time: <strong>24–48 hours</strong>.</div>
           </div>
 
-          <!-- Phone -->
           <div class="card" role="listitem">
             <span class="badge phone">🟠 STRATEGIC HIVE REVIEW</span>
             <h3>Phone / Video Tier</h3>
-
-            <div class="price-wrap">
-              <div class="price-row">
-                <p class="price" id="price-phone">$97 <small>/ month</small></p>
-                <span class="mini-savings" id="save-phone">Save 2 months yearly</span>
-              </div>
-              <div class="price-subline" id="sub-phone"></div>
-            </div>
-
+            <p class="price" id="price-phone">$97 <small>/ month</small></p>
             <p>Scheduled calls for deeper troubleshooting and a seasonal plan you can follow.</p>
             <ul>
               <li>Everything in Email Tier</li>
@@ -517,6 +475,7 @@
               <li>Swarm-prep review + next steps</li>
               <li>Post-call recap notes</li>
             </ul>
+            <div class="annual-line" id="annual-phone"></div>
             <div class="spacer"></div>
             <div class="card-actions">
               <a class="btn primary" id="cta-phone" href="#" target="_blank" rel="noopener">Schedule Strategy Support</a>
@@ -525,19 +484,10 @@
             <div class="hint"><strong>Scheduled support only.</strong> No emergency guarantee.</div>
           </div>
 
-          <!-- In-Person -->
           <div class="card" role="listitem">
             <span class="badge local">🔴 LOCAL IN-PERSON</span>
             <h3>Bay County Hive Visit</h3>
-
-            <div class="price-wrap">
-              <div class="price-row">
-                <p class="price" id="price-inperson">$199 <small>/ month</small></p>
-                <span class="mini-savings" id="save-inperson">Save 2 months yearly</span>
-              </div>
-              <div class="price-subline" id="sub-inperson"></div>
-            </div>
-
+            <p class="price" id="price-inperson">$199 <small>/ month</small></p>
             <p>Hands-on guidance at your hive—education-first, not a management service.</p>
             <ul>
               <li>Frame-by-frame walkthrough</li>
@@ -545,6 +495,7 @@
               <li>Seasonal plan for your yard</li>
               <li>Confidence-building practice</li>
             </ul>
+            <div class="annual-line" id="annual-inperson"></div>
             <div class="spacer"></div>
             <div class="card-actions">
               <a class="btn primary" id="cta-inperson" href="#" target="_blank" rel="noopener">Book a Hive Visit</a>
@@ -681,49 +632,61 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    // Billing selection
     function getBilling() {
       const sel = document.querySelector('input[name="billing"]:checked');
       return sel ? sel.value : "Monthly";
     }
 
-    function formatMoney(n){ return `$${n}`; }
-
-    // Shows BOTH options near the price:
-    // - If Monthly selected: show Monthly as main, show Annual as "equivalent per month" + total + savings
-    // - If Annual selected: show Annual total as main, show Equivalent monthly + savings
-    function renderTierPrice(tierKey, priceElId, subElId, saveElId){
+    // Update price text + annual discount lines
+    function renderPrices() {
       const billing = getBilling();
-      const monthly = PRICING[tierKey].monthly;
-      const annual = PRICING[tierKey].annual;
-      const fullAnnual = monthly * 12;
-      const saved = fullAnnual - annual;
-      const eqMonthly = (annual / 12);
 
-      const priceEl = document.getElementById(priceElId);
-      const subEl = document.getElementById(subElId);
-      const saveEl = document.getElementById(saveElId);
+      // Email
+      const emailPrice = document.getElementById("price-email");
+      const emailAnnual = document.getElementById("annual-email");
+      // Phone
+      const phonePrice = document.getElementById("price-phone");
+      const phoneAnnual = document.getElementById("annual-phone");
+      // InPerson (treated as a monthly plan option for discount display)
+      const inpersonPrice = document.getElementById("price-inperson");
+      const inpersonAnnual = document.getElementById("annual-inperson");
 
+      // Helper: annual line content (shows savings)
+      function annualLine(monthly, annual) {
+        const full = monthly * 12;
+        const saved = full - annual;
+        return `Annual: <strong>$${annual}</strong> / year <span class="muted">(was <span class="strike">$${full}</span>, save $${saved})</span>`;
+      }
+
+      // When Monthly selected: show monthly, and show annual savings line under it.
+      // When Annual selected: show annual, and show "Equivalent monthly" under it.
       if (billing === "Monthly") {
-        priceEl.innerHTML = `${formatMoney(monthly)} <small>/ month</small>`;
-        saveEl.textContent = `Save ${formatMoney(saved)} yearly`;
-        subEl.innerHTML =
-          `Annual: <strong>${formatMoney(eqMonthly.toFixed(2))}/mo</strong> billed <strong>${formatMoney(annual)}/yr</strong>
-           <span class="muted">(was <span class="strike">${formatMoney(fullAnnual)}</span>, save ${formatMoney(saved)})</span>`;
+        emailPrice.innerHTML = `$${PRICING.Email.monthly} <small>/ month</small>`;
+        emailAnnual.innerHTML = annualLine(PRICING.Email.monthly, PRICING.Email.annual);
+
+        phonePrice.innerHTML = `$${PRICING.Phone.monthly} <small>/ month</small>`;
+        phoneAnnual.innerHTML = annualLine(PRICING.Phone.monthly, PRICING.Phone.annual);
+
+        inpersonPrice.innerHTML = `$${PRICING.InPerson.monthly} <small>/ month</small>`;
+        inpersonAnnual.innerHTML = annualLine(PRICING.InPerson.monthly, PRICING.InPerson.annual);
       } else {
-        priceEl.innerHTML = `${formatMoney(annual)} <small>/ year</small>`;
-        saveEl.textContent = `Includes 2 months free`;
-        subEl.innerHTML =
-          `Equivalent: <strong>${formatMoney(eqMonthly.toFixed(2))}/mo</strong>
-           <span class="muted">(save ${formatMoney(saved)} vs monthly)</span>`;
+        // Annual selected
+        const eqEmail = (PRICING.Email.annual / 12).toFixed(2);
+        emailPrice.innerHTML = `$${PRICING.Email.annual} <small>/ year</small>`;
+        emailAnnual.innerHTML = `Equivalent: <strong>$${eqEmail}</strong> / month (2 months free)`;
+
+        const eqPhone = (PRICING.Phone.annual / 12).toFixed(2);
+        phonePrice.innerHTML = `$${PRICING.Phone.annual} <small>/ year</small>`;
+        phoneAnnual.innerHTML = `Equivalent: <strong>$${eqPhone}</strong> / month (2 months free)`;
+
+        const eqIn = (PRICING.InPerson.annual / 12).toFixed(2);
+        inpersonPrice.innerHTML = `$${PRICING.InPerson.annual} <small>/ year</small>`;
+        inpersonAnnual.innerHTML = `Equivalent: <strong>$${eqIn}</strong> / month (2 months free)`;
       }
     }
 
-    function renderPrices(){
-      renderTierPrice("Email", "price-email", "sub-email", "save-email");
-      renderTierPrice("Phone", "price-phone", "sub-phone", "save-phone");
-      renderTierPrice("InPerson", "price-inperson", "sub-inperson", "save-inperson");
-    }
-
+    // Wire CTAs to your Google Form with intent + billing markers
     function wireCTAs() {
       const billing = getBilling();
       const ctas = {
@@ -745,16 +708,20 @@
       Object.entries(ctas).forEach(([id, cfg]) => {
         const el = document.getElementById(id);
         if (!el) return;
+        // Free tier ignores billing (still included for tracking)
         const bill = cfg.intent === "Free" ? "Free" : billing;
         el.href = formLink(cfg.intent, bill);
+        el.addEventListener("click", () => {
+          console.log("[CTA Click]", id, "intent:", cfg.intent, "billing:", bill, "->", el.href);
+        }, { once: true });
       });
     }
 
-    // init
+    // Initialize
     renderPrices();
     wireCTAs();
 
-    // update on toggle
+    // Re-render on toggle change
     document.querySelectorAll('input[name="billing"]').forEach(r => {
       r.addEventListener("change", () => {
         renderPrices();
