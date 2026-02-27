@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hive & Honey Mentorship | Stop Guessing With Your Bees</title>
+  <meta name="description" content="Tiered beekeeping mentorship: Free starter resources, direct email support, phone/video strategy sessions, and Bay County in-person hive visits." />
+  <meta property="og:title" content="Hive & Honey Mentorship" />
+  <meta property="og:description" content="Stop guessing. Get structured support for your bees—free resources, direct access, and local hive visits." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg:#0b0c10; --panel:#12141b; --panel2:#0f1117;
+      --text:#e9ecf1; --muted:#b2b9c6;
+      --brand:#f7c948; --brand2:#76e4b6;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px; --max: 1100px;
+      --focus: 0 0 0 3px rgba(247,201,72,.35);
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text); line-height:1.5;
+      background:
+        radial-gradient(900px 500px at 30% -10%, rgba(247,201,72,.18), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(118,228,182,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg), #080910 60%, #07080e);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
+    .skip{position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;}
+    .skip:focus{left:12px; top:12px; width:auto; height:auto; padding:10px 12px; background:var(--panel); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); z-index:9999;}
+
+    .topbar{
+      position:sticky; top:0; z-index:1000;
+      backdrop-filter: blur(10px);
+      background: rgba(11,12,16,.70);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar .inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .brand .dot{
+      width:34px; height:34px; border-radius:11px;
+      background: linear-gradient(135deg, rgba(247,201,72,.95), rgba(118,228,182,.8));
+      display:grid; place-items:center;
+      box-shadow: 0 8px 18px rgba(247,201,72,.18);
+    }
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .nav a{
+      text-decoration:none; color:var(--muted);
+      font-weight:600; font-size:14px;
+      padding:8px 10px; border-radius:12px;
+    }
+    .nav a:hover{color:var(--text); background:rgba(255,255,255,.05);}
+    .cta-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+
+    .btn{
+      appearance:none; border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:800;
+      letter-spacing:.2px;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18);}
+    .btn:active{transform: translateY(1px);}
+    .btn:focus{outline:none; box-shadow: var(--focus);}
+
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(247,201,72,.95), rgba(247,201,72,.78));
+      color:#17140b;
+      border-color: rgba(247,201,72,.55);
+      box-shadow: 0 12px 26px rgba(247,201,72,.14);
+    }
+    .btn.primary:hover{background: linear-gradient(135deg, rgba(247,201,72,1), rgba(247,201,72,.85));}
+    .btn.secondary{
+      background: linear-gradient(135deg, rgba(118,228,182,.30), rgba(118,228,182,.14));
+      border-color: rgba(118,228,182,.35);
+    }
+
+    header.hero{padding:54px 0 18px;}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:start;
+    }
+    @media (max-width: 920px){ .hero-grid{grid-template-columns:1fr;} .nav{display:none;} }
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:7px 10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+      margin-bottom:14px;
+    }
+    h1{font-size:44px; line-height:1.08; margin:0 0 12px; letter-spacing:-.6px;}
+    @media (max-width: 520px){ h1{font-size:36px;} }
+    .subhead{color:var(--muted); font-size:18px; margin:0 0 18px; max-width:62ch;}
+    .hero-actions{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin: 12px 0 10px;}
+    .trust{margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; color:var(--muted); font-weight:700; font-size:13px;}
+    .pill{border:1px dashed rgba(255,255,255,.18); padding:8px 10px; border-radius:999px; background: rgba(255,255,255,.02);}
+
+    .hero-card{
+      background: linear-gradient(180deg, rgba(18,20,27,.92), rgba(15,17,23,.92));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .hero-card h3{margin:0 0 10px; font-size:16px;}
+    .hero-card ul{margin:0; padding-left:18px; color:var(--muted);}
+    .hero-card li{margin: 8px 0;}
+    .micro{margin-top:12px; font-size:13px; color:var(--muted); border-top:1px solid var(--line); padding-top:12px;}
+
+    section{padding:34px 0;}
+    .section-title{font-size:24px; margin:0 0 10px; letter-spacing:-.2px;}
+    .section-sub{color:var(--muted); margin:0 0 18px; max-width:72ch;}
+    .panel{
+      background: rgba(18,20,27,.78);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+
+    .pricing{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .pricing{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 560px){ .pricing{grid-template-columns: 1fr;} }
+
+    .card{
+      background: linear-gradient(180deg, rgba(18,20,27,.90), rgba(15,17,23,.88));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 100%;
+    }
+
+    .billing .toggle {
+    background-color: var(--badge-local-bg, #facc15);
+    }
+
+    .billing .toggle label {
+     color: #000;
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:900; font-size:12px;
+      padding:7px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      width: fit-content;
+    }
+    .badge.free{border-color: rgba(118,228,182,.35); background: rgba(118,228,182,.10); color: #bff5df;}
+    .badge.email{border-color: rgba(247,201,72,.40); background: rgba(247,201,72,.10); color: #ffe6a3;}
+    .badge.phone{border-color: rgba(247,201,72,.32); background: rgba(247,201,72,.08); color: #ffe6a3;}
+    .badge.local{border-color: rgba(255,107,107,.35); background: rgba(255,107,107,.10); color: #ffd0d0;}
+
+    .card h3{margin:12px 0 6px; font-size:18px;}
+
+    /* NEW: more prominent price area */
+    .price-wrap{margin:0 0 10px;}
+    .price-row{
+      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+      flex-wrap:wrap;
+    }
+    .price{
+      font-size:30px; margin:0; letter-spacing:-.3px;
+    }
+    .price small{font-size:14px; color:var(--muted); font-weight:800;}
+    .mini-savings{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:900; font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(118,228,182,.35);
+      background: rgba(118,228,182,.10);
+      color:#bff5df;
+      white-space:nowrap;
+    }
+    .price-subline{
+      margin-top:8px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .price-subline strong{color:var(--text);}
+    .strike{ text-decoration: line-through; opacity:.55; }
+
+    .card p{color:var(--muted); margin:0 0 14px;}
+    .card ul{margin:0 0 16px; padding-left:18px; color:var(--muted);}
+    .card li{margin:7px 0;}
+    .card .spacer{flex:1;}
+    .card .card-actions{display:flex; flex-direction:column; gap:10px;}
+    .hint{font-size:12.5px; color:var(--muted); margin-top:10px; border-top:1px solid var(--line); padding-top:10px;}
+    .featured{
+      border-color: rgba(247,201,72,.55);
+      box-shadow: 0 14px 40px rgba(247,201,72,.10);
+    }
+    .featured:before{
+      content:"Most Popular";
+      position:absolute; top:14px; right:-54px;
+      transform: rotate(30deg);
+      background: rgba(247,201,72,.92);
+      color:#17140b;
+      font-weight:900;
+      padding:8px 60px;
+      font-size:12px;
+      letter-spacing:.4px;
+    }
+
+    /* Billing toggle + callout */
+    .billing{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      margin: 0 0 14px;
+    }
+    .toggle{
+      display:inline-flex; align-items:center; gap:10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding:8px 10px;
+      border-radius:999px;
+      box-shadow: var(--shadow);
+    }
+    .toggle label{font-weight:900; font-size:13px; color:var(--muted); cursor:pointer;}
+    .toggle input{accent-color: var(--brand);}
+    .save-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:900; font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(247,201,72,.45);
+      background: rgba(247,201,72,.12);
+      color:#ffe6a3;
+      white-space:nowrap;
+    }
+    .note{
+      color:var(--muted);
+      font-size:13px;
+      margin:0 0 6px;
+    }
+
+    .table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(18,20,27,.55);
+    }
+    .table th, .table td{
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+      border-right:1px solid var(--line);
+      vertical-align:top;
+      font-size:14px;
+    }
+    .table th{background: rgba(255,255,255,.03); text-align:left;}
+    .table tr:last-child td{border-bottom:none;}
+    .table th:last-child, .table td:last-child{border-right:none;}
+    .check{color: var(--brand2); font-weight:900;}
+    .dash{color: rgba(255,255,255,.35);}
+
+    details{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:14px 14px;
+      background: rgba(255,255,255,.02);
+      margin:10px 0;
+    }
+    summary{cursor:pointer; font-weight:900; list-style:none;}
+    summary::-webkit-details-marker{display:none;}
+    details p{color:var(--muted); margin:10px 0 0;}
+
+    .final-cta{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:18px; flex-wrap:wrap;
+      padding:18px;
+      border-radius: var(--radius);
+      border:1px solid rgba(247,201,72,.35);
+      background: linear-gradient(135deg, rgba(247,201,72,.12), rgba(118,228,182,.06));
+      box-shadow: 0 14px 40px rgba(0,0,0,.25);
+    }
+    .final-cta h3{margin:0 0 4px;}
+    .final-cta p{margin:0; color:var(--muted);}
+
+    footer{padding:26px 0 40px; color:var(--muted); font-size:13px;}
+    .smallprint{color:rgba(255,255,255,.45);}
+    .anchor{scroll-margin-top: 90px;}
+    .muted{color:var(--muted);}
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <script>
+    // ✅ Your Google Form link (single source of truth)
+    const FORM_URL = "https://forms.gle/iYsTvtiJwiJdH6em8";
+
+    // Annual discount = 2 free months => pay for 10 months
+    const PRICING = {
+      Email:   { monthly: 29, annual: 29 * 10 },
+      Phone:   { monthly: 97, annual: 97 * 10 },
+      InPerson:{ monthly: 199, annual: 199 * 10 } // displayed as a plan option
+    };
+
+    function formLink(intent, billing) {
+      const b = billing ? `&billing=${encodeURIComponent(billing)}` : "";
+      return `${FORM_URL}#intent=${encodeURIComponent(intent)}${b}`;
+    }
+  </script>
+
+  <div class="topbar">
+    <div class="wrap">
+      <div class="inner">
+        <a class="brand" href="#top" aria-label="Hive & Honey Mentorship home">
+          <span class="dot" aria-hidden="true">🐝</span>
+          <span>Hive &amp; Honey Mentorship</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#how">How it works</a>
+          <a href="#tiers">Tiers</a>
+          <a href="#compare">Compare</a>
+          <a href="#story">Why this exists</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="cta-row">
+          <a class="btn primary" id="cta-top-start" href="#" target="_blank" rel="noopener">Free Starter Kit</a>
+          <a class="btn secondary" id="cta-top-email" href="#" target="_blank" rel="noopener">Get Direct Access</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header id="top" class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Backyard beekeeping support • Expert guidance for every stage of your beekeeping journey.</div>
+          <h1>Stop guessing with your bees.</h1>
+          <p class="subhead">
+            You don’t need another video. You need someone who can help you decide:
+            <strong>Is this normal?</strong> <strong>Should I feed?</strong> <strong>Are they about to swarm?</strong>
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" id="cta-hero-start" href="#" target="_blank" rel="noopener">Get your Free Starter Kit (No commitment)</a>
+            <a class="btn" id="cta-hero-compare" href="#compare">Compare tiers</a>
+          </div>
+
+          <div class="trust" aria-label="Trust indicators">
+            <span class="pill">✅ Free Tier is TRULY Free Forever!</span>
+            <span class="pill">✅ Tiered support that scales with you</span>
+            <span class="pill">✅ International help with Local Hands On option in Bay County</span>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Quick value summary">
+          <h3>What you get immediately (Free Tier)</h3>
+          <ul>
+            <li>📚 <a href="https://amzn.to/48oswoX">Book: Beekeeping Tips, Tricks and Hacks (PDF version)</a><</li>
+            <li>📓 Hive Log Template</li>
+            <li>📧 Seasonal guides (4–6 per year)</li>
+            <li>💻 Quarterly public group Q&amp;A (YouTube Live)</li>
+          </ul>
+          <div class="micro">
+            <strong>Fast path:</strong> Get Free Starter Kit → ask questions → upgrade only if you need more involved access.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="how" class="anchor">
+      <div class="wrap">
+        <h2 class="section-title">How it works</h2>
+        <p class="section-sub">
+          This is a structured mentorship ladder for new and developing beekeepers.
+          Higher tiers include everything below them.
+        </p>
+
+        <div class="panel">
+          <h3 style="margin:0 0 8px;">Why this is different</h3>
+          <p class="muted" style="margin:0 0 12px;">
+            YouTube can’t see your frames. Facebook groups contradict each other. Google doesn’t know your humidity.
+            This system gives you <strong>context-specific guidance</strong>.
+          </p>
+          <ul class="muted" style="margin:0; padding-left:18px;">
+            <li>Clear tiers (no confusion)</li>
+            <li>Predictable support</li>
+            <li>Built for real-world beekeeping problems</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="tiers" class="anchor">
+      <div class="wrap">
+        <h2 class="section-title">Choose your level of support</h2>
+        <p class="section-sub">
+          Get your Free Starter Kit! Upgrade only if you want direct help and faster clarity.
+        </p>
+
+        <div class="billing" aria-label="Billing frequency toggle">
+          <div class="toggle">
+            <label><input type="radio" name="billing" value="Monthly" checked> Monthly</label>
+            <label><input type="radio" name="billing" value="Annual"> Annual</label>
+          </div>
+          <div class="save-pill">🔥 Annual saves 2 months (pay for 10)</div>
+        </div>
+        <p class="note">Tip: Most members choose Annual to lock in <strong>2 months free</strong>.</p>
+
+        <div class="pricing" role="list">
+          <!-- Free -->
+          <div class="card" role="listitem">
+            <span class="badge free">🟢 FREE STARTER ACCESS</span>
+            <h3>Forever Free Access!</h3>
+
+            <div class="price-wrap">
+              <div class="price-row">
+                <p class="price">$0 <small>Forever!</small></p>
+              </div>
+              <div class="price-subline">
+                <span><strong>No recurring charges.</strong></span>
+              </div>
+            </div>
+
+            <p>No Commitment entry point that gives you real tools and live Q&amp;A.</p>
+            <ul>
+              <li>📚 <a href="https://amzn.to/48oswoX">Book: Beekeeping Tips, Tricks and Hacks (PDF version)</a></li>
+              <li>📧 Seasonal guides (4–6/yr)</li>
+              <li>📓 Hive log template</li>
+              <li>💻 Quarterly group Q&amp;A (YouTube Live)</li>
+            </ul>
+            <div class="spacer"></div>
+            <div class="card-actions">
+              <a class="btn primary" id="cta-free" href="#" target="_blank" rel="noopener">Start Free</a>
+              <a class="btn" href="#compare">See what you get</a>
+            </div>
+            <div class="hint"><b>Best for: new beekeepers who want a solid system without commitment.</b></div>
+          </div>
+
+          <!-- Email -->
+          <div class="card featured" role="listitem">
+            <span class="badge email">🟡 DIRECT EMAIL SUPPORT</span>
+            <h3>Email Support Tier</h3>
+
+            <div class="price-wrap">
+              <div class="price-row">
+                <p class="price" id="price-email">$29 <small>/ month</small></p>
+                <span class="mini-savings" id="save-email">Save 2 months yearly</span>
+              </div>
+              <div class="price-subline" id="sub-email"></div>
+            </div>
+
+            <p>Direct access for reassurance, troubleshooting, and seasonal guidance.</p>
+            <ul>
+              <li>💥 All Free Tier Included</li>
+              <li>📧 Monthly email check-ins</li>
+              <li>📩 Email Q&A support (24–48 hr reply)</li>
+                <ul>
+                  <li>😲 Unlimited email Q&amp;A (simple issues)</li>
+                  <li>✔ Up to 10 detailed responses / month</li>
+                </ul>
+              <li>📖 Hive log review feedback</li>
+            </ul>
+            <div class="spacer"></div>
+            <div class="card-actions">
+              <a class="btn primary" id="cta-email" href="#" target="_blank" rel="noopener">Get Direct Access</a>
+              <a class="btn" href="#faq">What is “detailed”?</a>
+            </div>
+            <div class="hint"><b>Best for: Confident hobbyists who just want a safety net.</b></div>
+          </div>
+
+          <!-- Phone -->
+          <div class="card" role="listitem">
+            <span class="badge phone">🟠 STRATEGIC HIVE REVIEW</span>
+            <h3>Phone / Video Tier</h3>
+
+            <div class="price-wrap">
+              <div class="price-row">
+                <p class="price" id="price-phone">$97 <small>/ month</small></p>
+                <span class="mini-savings" id="save-phone">Save 2 months yearly</span>
+              </div>
+              <div class="price-subline" id="sub-phone"></div>
+            </div>
+
+            <p>Scheduled calls for deeper troubleshooting and a seasonal plan you can follow.</p>
+            <ul>
+              <li>✨ All Email Guidance Tier benefits</li>
+              <li>☎ Up to 2 scheduled calls / month (20–30 min)</li>
+              <li>📧 Priority email support for urgent questions</li>
+              <li>Access to Hive Health Photo Review Service</li>
+            </ul>
+            <div class="spacer"></div>
+            <div class="card-actions">
+              <a class="btn primary" id="cta-phone" href="#" target="_blank" rel="noopener">Schedule Support</a>
+              <a class="btn" href="#compare">Compare tiers</a>
+            </div>
+            <div class="hint"><B>Best for: Newer Beekeepers who want more guidance but still manage their bees themselves.</B></div>
+          </div>
+
+          <!-- In-Person -->
+          <div class="card" role="listitem">
+            <span class="badge local">🔴 LOCAL Hands-on Help</span>
+            <h3>In-Person Mentorship</h3>
+
+            <div class="price-wrap">
+              <div class="price-row">
+                <p class="price" id="price-inperson">$199 <small>/ month</small></p>
+                <span class="mini-savings" id="save-inperson">Save 2 months yearly</span>
+              </div>
+              <div class="price-subline" id="sub-inperson"></div>
+            </div>
+
+            <p>Hands-on guidance at your hive.</p>
+            <ul>
+              <li>🌟 ALL Tier Benefits +</li>
+              <li>📟 Frame-by-frame walkthrough</li>
+              <li>❗❗ Limited to the Bay County and Surrounding areas, travel fees may apply **</li>
+              <li>🌎 1 on‑site session / month (≈1 hr)</li>
+              <li>👌🏽 Hands‑on demos: mite checks, supering, feeding</li>
+            </ul>
+            <div class="spacer"></div>
+            <div class="card-actions">
+              <a class="btn primary" id="cta-inperson" href="#" target="_blank" rel="noopener">Book a Hive Visit</a>
+              <a class="btn" href="#faq">Service area</a>
+            </div>
+            <div class="hint"><b>Best for: Beginners who want to learn side-by-side with an expert.</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="anchor">
+      <div class="wrap">
+        <h2 class="section-title">Compare tiers quickly</h2>
+        <p class="section-sub">No complicated options. Pick the access level you want.</p>
+
+        <div class="panel" style="padding:0;">
+          <table class="table" aria-label="Tier comparison table">
+            <thead>
+              <tr>
+                <th style="width:36%;">Feature</th>
+                <th>Free</th>
+                <th>Email</th>
+                <th>Phone/Video</th>
+                <th>In-Person</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Free PDF guide + hive log template</td>
+                <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+              </tr>
+              <tr>
+                <td>Seasonal email guides</td>
+                <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+              </tr>
+              <tr>
+                <td>Quarterly group Q&amp;A (YouTube Live)</td>
+                <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+              </tr>
+              <tr>
+                <td>Unlimited simple Q&amp;A</td>
+                <td class="dash">—</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+              </tr>
+              <tr>
+                <td>Up to 10 detailed responses / month</td>
+                <td class="dash">—</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+              </tr>
+              <tr>
+                <td>Scheduled consult calls</td>
+                <td class="dash">—</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td>
+              </tr>
+              <tr>
+                <td>On-site hive visit (Bay County)</td>
+                <td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" id="cta-compare-start" href="#" target="_blank" rel="noopener">Get Free Starter Kit</a>
+          <a class="btn secondary" id="cta-compare-email" href="#" target="_blank" rel="noopener">Get Direct Access</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="anchor">
+      <div class="wrap">
+        <h2 class="section-title">Why this exists</h2>
+        <p class="section-sub">A quick founder note—so you know exactly what this is (and what it’s not).</p>
+
+        <div class="panel">
+          <p style="margin:0 0 12px;">
+            I built Hive &amp; Honey Mentorship because too many new beekeepers quit—not from lack of effort,
+            but from feeling alone when something went wrong.
+          </p>
+          <p class="muted" style="margin:0;">
+            When you open a hive and something looks “off,” the internet can’t see your frames,
+            doesn’t know your local conditions, and won’t give you a clear next step.
+            This is structured support that helps you move from confusion → confidence, one decision at a time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="anchor">
+      <div class="wrap">
+        <h2 class="section-title">FAQ</h2>
+        <p class="section-sub">Quick answers to reduce hesitation and increase signups.</p>
+
+        <details>
+          <summary>What counts as “simple” vs “detailed” Q&amp;A?</summary>
+          <p>
+            <strong>Simple:</strong> short yes/no guidance like “Is this normal?” “Should I feed?” “Is this swarm prep?”
+            <br />
+            <strong>Detailed:</strong> hive log review, treatment plans, recovery troubleshooting, or multi-step planning.
+          </p>
+        </details>
+
+        <details>
+          <summary>Do you offer emergency support?</summary>
+          <p>No emergency guarantee. Phone/video support is scheduled. Email support is typically 24–48 hours.</p>
+        </details>
+
+        <details>
+          <summary>Is this hive management?</summary>
+          <p>No—this is mentorship and education. You keep full control of your hive.</p>
+        </details>
+
+        <div style="margin-top:14px;" class="final-cta" aria-label="Final call to action">
+          <div>
+            <h3>Start free, get clarity, and upgrade only if you want direct access.</h3>
+            <p>Frictionless entry → stronger confidence → better outcomes for your bees.</p>
+          </div>
+          <div class="cta-row">
+            <a class="btn primary" id="cta-bottom-start" href="#" target="_blank" rel="noopener">Get Free Starter Kit</a>
+            <a class="btn secondary" id="cta-bottom-email" href="#" target="_blank" rel="noopener">Get Direct Access</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="smallprint">
+        © <span id="year"></span> Hive &amp; Honey Mentorship • Bay County, FL<br />
+        <span class="muted">Disclosure: Mentorship is educational support, not a hive management service.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function getBilling() {
+      const sel = document.querySelector('input[name="billing"]:checked');
+      return sel ? sel.value : "Monthly";
+    }
+
+    function formatMoney(n){ return `$${n}`; }
+
+    // Shows BOTH options near the price:
+    // - If Monthly selected: show Monthly as main, show Annual as "equivalent per month" + total + savings
+    // - If Annual selected: show Annual total as main, show Equivalent monthly + savings
+    function renderTierPrice(tierKey, priceElId, subElId, saveElId){
+      const billing = getBilling();
+      const monthly = PRICING[tierKey].monthly;
+      const annual = PRICING[tierKey].annual;
+      const fullAnnual = monthly * 12;
+      const saved = fullAnnual - annual;
+      const eqMonthly = (annual / 12);
+
+      const priceEl = document.getElementById(priceElId);
+      const subEl = document.getElementById(subElId);
+      const saveEl = document.getElementById(saveElId);
+
+      if (billing === "Monthly") {
+        priceEl.innerHTML = `${formatMoney(monthly)} <small>/ month</small>`;
+        saveEl.textContent = `Save ${formatMoney(saved)} yearly`;
+        subEl.innerHTML =
+          `Annual: <strong>${formatMoney(eqMonthly.toFixed(2))}/mo</strong> billed <strong>${formatMoney(annual)}/yr</strong>
+           <span class="muted">(was <span class="strike">${formatMoney(fullAnnual)}</span>, save ${formatMoney(saved)})</span>`;
+      } else {
+        priceEl.innerHTML = `${formatMoney(annual)} <small>/ year</small>`;
+        saveEl.textContent = `Includes 2 months free`;
+        subEl.innerHTML =
+          `Equivalent: <strong>${formatMoney(eqMonthly.toFixed(2))}/mo</strong>
+           <span class="muted">(save ${formatMoney(saved)} vs monthly)</span>`;
+      }
+    }
+
+    function renderPrices(){
+      renderTierPrice("Email", "price-email", "sub-email", "save-email");
+      renderTierPrice("Phone", "price-phone", "sub-phone", "save-phone");
+      renderTierPrice("InPerson", "price-inperson", "sub-inperson", "save-inperson");
+    }
+
+    function wireCTAs() {
+      const billing = getBilling();
+      const ctas = {
+        "cta-top-start": { intent: "Free" },
+        "cta-hero-start": { intent: "Free" },
+        "cta-free": { intent: "Free" },
+        "cta-compare-start": { intent: "Free" },
+        "cta-bottom-start": { intent: "Free" },
+
+        "cta-top-email": { intent: "Email" },
+        "cta-email": { intent: "Email" },
+        "cta-compare-email": { intent: "Email" },
+        "cta-bottom-email": { intent: "Email" },
+
+        "cta-phone": { intent: "Phone" },
+        "cta-inperson": { intent: "InPerson" }
+      };
+
+      Object.entries(ctas).forEach(([id, cfg]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const bill = cfg.intent === "Free" ? "Free" : billing;
+        el.href = formLink(cfg.intent, bill);
+      });
+    }
+
+    // init
+    renderPrices();
+    wireCTAs();
+
+    // update on toggle
+    document.querySelectorAll('input[name="billing"]').forEach(r => {
+      r.addEventListener("change", () => {
+        renderPrices();
+        wireCTAs();
+      });
+    });
+  </script>
+</body>
+</html>
