@@ -334,9 +334,9 @@
 
     // Annual discount = 2 free months => pay for 10 months
     const PRICING = {
-      Email:   { monthly: 14.50, annual: 14.50 * 10 },
-      Phone:   { monthly: 48.50, annual: 48.50 * 10 },
-      InPerson:{ monthly: 99.50, annual: 99.50 * 10 } // displayed as a plan option
+      Email:   { monthly: 29, annual: 29 * 10 },
+      Phone:   { monthly: 97, annual: 97 * 10 },
+      InPerson:{ monthly: 199, annual: 199 * 10 } // displayed as a plan option
     };
 
     function formLink(intent, billing) {
@@ -485,7 +485,7 @@
 
             <div class="price-wrap">
               <div class="price-row">
-                <p class="price" id="price-email">$14.50 <small>/ month</small></p>
+                <p class="price" id="price-email">$29 <small>/ month</small></p>
                 <span class="mini-savings" id="save-email">Save 2 months yearly</span>
               </div>
               <div class="price-subline" id="sub-email"></div>
@@ -517,7 +517,7 @@
 
             <div class="price-wrap">
               <div class="price-row">
-                <p class="price" id="price-phone">$48.50 <small>/ month</small></p>
+                <p class="price" id="price-phone">$97 <small>/ month</small></p>
                 <span class="mini-savings" id="save-phone">Save 2 months yearly</span>
               </div>
               <div class="price-subline" id="sub-phone"></div>
@@ -545,7 +545,7 @@
 
             <div class="price-wrap">
               <div class="price-row">
-                <p class="price" id="price-inperson">$99.50 <small>/ month</small></p>
+                <p class="price" id="price-inperson">$199 <small>/ month</small></p>
                 <span class="mini-savings" id="save-inperson">Save 2 months yearly</span>
               </div>
               <div class="price-subline" id="sub-inperson"></div>
@@ -700,10 +700,7 @@
       return sel ? sel.value : "Monthly";
     }
 
-    function formatMoney(n){
-      const num = Number(n);
-      return `$${Number.isInteger(num) ? num : num.toFixed(2)}`;
-    }
+    function formatMoney(n){ return `$${n}`; }
 
     // Shows BOTH options near the price:
     // - If Monthly selected: show Monthly as main, show Annual as "equivalent per month" + total + savings
